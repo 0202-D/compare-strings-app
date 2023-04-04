@@ -2,6 +2,8 @@ package com.company;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +36,13 @@ public class CompareStringApp {
 
         for (Map.Entry entry : resultMap.entrySet()
         ) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
+            try (FileWriter writer = new FileWriter("output.txt", true)) {
+                writer.write(entry.getKey() + " : " + entry.getValue());
+                writer.append('\n');
+                writer.flush();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 
